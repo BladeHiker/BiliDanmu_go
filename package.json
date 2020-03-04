@@ -1,0 +1,19 @@
+{
+  "name": "bilidanmu",
+  "version": "1.0.0",
+  "description": "123",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sh1luo/BiliDanmu_go.git"
+  },
+  "author": "shiluo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sh1luo/BiliDanmu_go/issues"
+  },
+  "homepage": "https://github.com/sh1luo/BiliDanmu_go#readme"
+}
