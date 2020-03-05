@@ -20,6 +20,18 @@ git clone https://github.com/sh1luo/BiliDanmu_go.git
 go run main.go
 ```
 
+## Feature
+
+> - 🔥  Compatible for short RoomID,such as 102(shortID) or 21129128(common).
+> - 😁 Support that display barrage,gift and entry message.
+> - 💎 No missing any message(by `channel` and `go` feature)!
+
+## Future
+
+> 😀 Because of developing by [golang](https://golang.org/) ,and go do not pay attention to [GUI](https://zh.wikipedia.org/zh/%E5%9B%BE%E5%BD%A2%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2) .So there is no foreground programs right now.if having,i will update more other feature.for example,playing songs by user barrage :)
+
+>  💡 WELCOME COMTRIBUTING!
+
 ## Author
 
 👤 **shiluo**
