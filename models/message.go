@@ -30,6 +30,19 @@ func NewDanmu() *DanMuMsg {
 }
 
 type Gift struct {
+	UUname   string `json:"u_uname"`
+	Action   string `json:"action"`
+	Price    uint32 `json:"price"`
+	GiftName string `json:"gift_name"`
+}
+
+func NewGift() *Gift {
+	return &Gift{
+		UUname:   "",
+		Action:   "",
+		Price:    0,
+		GiftName: "",
+	}
 }
 
 type WelCome struct {
@@ -41,10 +54,12 @@ type Notice struct {
 type CMD string
 
 var (
-	CMDDanmuMsg                  CMD = "DANMU_MSG"
-	CMDSendGift                  CMD = "SEND_GIFT"
-	CMDWELCOME                   CMD = "WELCOME "
-	CMDRoomRealTimeMessageUpdate CMD = "ROOM_REAL_TIME_MESSAGE_UPDATE"
+	CMDDanmuMsg                  CMD = "DANMU_MSG"                     // 普通弹幕信息
+	CMDSendGift                  CMD = "SEND_GIFT"                     // 普通的礼物，不包含礼物连击
+	CMDWELCOME                   CMD = "WELCOME"                       // 欢迎VIP
+	CMDWelcomeGuard              CMD = "WELCOME_GUARD"                 // 欢迎房管
+	CMDEntry                     CMD = "ENTRY_EFFECT"                  // 欢迎舰长等头衔
+	CMDRoomRealTimeMessageUpdate CMD = "ROOM_REAL_TIME_MESSAGE_UPDATE" // 房间关注数变动
 )
 
 func (c *Client) SendPackage(packetlen uint32, magic uint16, ver uint16, typeID uint32, param uint32, data []byte) (err error) {
@@ -114,9 +129,13 @@ func (c *Client) ReceiveMsg() {
 					case CMDDanmuMsg:
 						pool.UserMsg <- string(inflated[16:l])
 					case CMDSendGift:
-						pool.UserGift<-string(inflated[16:l])
+						pool.UserGift <- string(inflated[16:l])
 					case CMDWELCOME:
-						pool.UserGift<-string(inflated[16:l])
+						pool.UserGift <- string(inflated[16:l])
+					case CMDWelcomeGuard:
+						pool.UserGuard <- string(inflated[16:l])
+					case CMDEntry:
+						pool.UserEntry <- string(inflated[16:l])
 					}
 					inflated = inflated[l:]
 				}

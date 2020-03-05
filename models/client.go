@@ -9,6 +9,7 @@ import (
 
 var
 (
+	RealID      = "http://api.live.bilibili.com/room/v1/Room/room_init" 				// params: id=xxx
 	DanMuServer = "ks-live-dmcmt-bj6-pm-02.chat.bilibili.com:443"
 	keyUrl      = "https://api.live.bilibili.com/room/v1/Danmu/getConf"                 // params: room_id=xxx&platform=pc&player=web
 	roomInfoUrl = "https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom" // params: room_id=xxx

@@ -11,6 +11,25 @@ import (
 	"net/http"
 )
 
+func GetRealRoomID(short int) (realID uint32, err error) {
+	url := fmt.Sprintf("%s?id=%d", RealID, short)
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("http.Get token err: ", err)
+		return 0, err
+	}
+
+	rawdata, err := ioutil.ReadAll(resp.Body)
+	_ = resp.Body.Close()
+	if err != nil {
+		fmt.Println("ioutil.ReadAll(resp.Body) err: ", err)
+		return 0, err
+	}
+	realID = json.Get(rawdata, "data", "room_id").ToUint32()
+
+	return realID, nil
+}
+
 // GetToken return the necessary token for connecting to the server
 func GetToken(roomid uint32) (key string) {
 	url := fmt.Sprintf("%s?room_id=%d&platform=pc&player=web", keyUrl, roomid)
@@ -88,6 +107,14 @@ func (d *DanMuMsg) GetDanmuMsg(source []byte) {
 	return
 }
 
+func (g *Gift) GetGiftMsg(source []byte) {
+	g.UUname = json.Get(source, "data", "uname").ToString()
+	g.Action = json.Get(source, "data", "action").ToString()
+	nums := json.Get(source, "data", "num").ToUint32()
+	g.Price = json.Get(source, "data", "price").ToUint32() * nums
+	g.GiftName = json.Get(source, "data", "giftName").ToString()
+}
+
 // 返回字节数组表示数的十进制形式
 func ByteArrToDecimal(src []byte) (sum int) {
 	if src == nil {
@@ -98,7 +125,7 @@ func ByteArrToDecimal(src []byte) (sum int) {
 	for i := l - 1; i >= 0; i-- {
 		base := int(math.Pow(16, float64(l-i-1)))
 		var mul int
-		if int(b[i])>=97 {
+		if int(b[i]) >= 97 {
 			mul = int(b[i]) - 87
 		} else {
 			mul = int(b[i]) - 48
