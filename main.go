@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
 )
 
 func main() {
@@ -35,6 +34,4 @@ func main() {
 		fmt.Println("c.Start err :", err)
 		return
 	}
-
-	time.Sleep(time.Minute * 3)
 }
