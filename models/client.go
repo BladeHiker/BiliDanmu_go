@@ -94,7 +94,7 @@ func (c *Client) Start() (err error) {
 		fmt.Println("SendPackage err,", err)
 		return
 	}
-	go c.ReceiveMsg()
 	go c.HeartBeat()
+	c.ReceiveMsg()
 	return
 }
