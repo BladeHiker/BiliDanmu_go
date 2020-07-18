@@ -19,7 +19,9 @@ func NewPool() *Pool {
 		UserMsg:         make(chan string, 10),
 		UserGift:        make(chan string, 10),
 		UserEnter:       make(chan string, 10),
+		UserGuard:       make(chan string, 10),
 		MsgUncompressed: make(chan string, 10),
+		UserEntry:       make(chan string, 10),
 	}
 }
 
