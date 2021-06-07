@@ -2,10 +2,10 @@ package main
 
 import (
 	"biliDanMu/models"
+	"bufio"
 	"fmt"
 	"log"
 	"os"
-	"time"
 )
 
 func main() {
@@ -19,7 +19,7 @@ func main() {
 
 	// 兼容房间号短 ID
 	if roomid >= 100 && roomid < 1000 {
-		roomid,err = models.GetRealRoomID(int(roomid))
+		roomid, err = models.GetRealRoomID(int(roomid))
 		if err != nil {
 			log.Println("房间号输入错误，请退出重新输入！")
 			os.Exit(0)
@@ -36,5 +36,8 @@ func main() {
 		return
 	}
 
-	time.Sleep(time.Minute * 3)
+	input := bufio.NewScanner(os.Stdin)
+	for {
+		input.Scan()
+	}
 }

@@ -7,10 +7,9 @@ import (
 	"net/url"
 )
 
-var
-(
-	RealID      = "http://api.live.bilibili.com/room/v1/Room/room_init" 				// params: id=xxx
-	DanMuServer = "ks-live-dmcmt-bj6-pm-02.chat.bilibili.com:443"
+var (
+	RealID      = "http://api.live.bilibili.com/room/v1/Room/room_init" // params: id=xxx
+	DanMuServer = "broadcastlv.chat.bilibili.com:443"
 	keyUrl      = "https://api.live.bilibili.com/room/v1/Danmu/getConf"                 // params: room_id=xxx&platform=pc&player=web
 	roomInfoUrl = "https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom" // params: room_id=xxx
 	json        = jsoniter.ConfigCompatibleWithStandardLibrary
@@ -71,7 +70,7 @@ func NewClient(roomid uint32) (c *Client, err error) {
 }
 
 func (c *Client) Start() (err error) {
-	u := url.URL{Scheme: "wss", Host: DanMuServer, Path: "/sub",}
+	u := url.URL{Scheme: "wss", Host: DanMuServer, Path: "/sub"}
 
 	conn, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 

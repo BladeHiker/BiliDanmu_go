@@ -120,22 +120,22 @@ func (c *Client) ReceiveMsg() {
 		case 5:
 			if inflated, err := ZlibInflate(msg[16:]); err != nil {
 				// 代表是未压缩数据
-				pool.MsgUncompressed <- string(msg[16:])
+				pool.MsgUncompressed <- msg[16:]
 			} else {
 				for len(inflated) > 0 {
 					l := ByteArrToDecimal(inflated[:4])
 					c := json.Get(inflated[16:l], "cmd").ToString()
 					switch CMD(c) {
 					case CMDDanmuMsg:
-						pool.UserMsg <- string(inflated[16:l])
+						pool.UserMsg <- inflated[16:l]
 					case CMDSendGift:
-						pool.UserGift <- string(inflated[16:l])
+						pool.UserGift <- inflated[16:l]
 					case CMDWELCOME:
-						pool.UserGift <- string(inflated[16:l])
+						pool.UserGift <- inflated[16:l]
 					case CMDWelcomeGuard:
-						pool.UserGuard <- string(inflated[16:l])
+						pool.UserGuard <- inflated[16:l]
 					case CMDEntry:
-						pool.UserEntry <- string(inflated[16:l])
+						pool.UserEntry <- inflated[16:l]
 					}
 					inflated = inflated[l:]
 				}
@@ -148,7 +148,7 @@ func (c *Client) HeartBeat() {
 	for {
 		if c.Connected {
 			obj := []byte("5b6f626a656374204f626a6563745d")
-			if err := c.SendPackage(0, 16, 1, 2, 1, obj); err != nil {
+			if err := c.SendPackage(31, 16, 1, 2, 1, obj); err != nil {
 				log.Println("heart beat err: ", err)
 				continue
 			}
